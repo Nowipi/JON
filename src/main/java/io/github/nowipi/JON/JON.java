@@ -112,6 +112,9 @@ public class JON {
         } else {
             String str = "{";
             for (Field field : clazz.getDeclaredFields()) {
+                if (Modifier.isStatic(field.getModifiers()) || Modifier.isTransient(field.getModifiers())) {
+                    continue;
+                }
                 field.setAccessible(true);
                 try {
                     str += field.getName() + ':' + toJON(field.get(object), jonObject) + ',';
